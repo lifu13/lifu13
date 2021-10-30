@@ -1,0 +1,90 @@
+<configuration>
+
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+
+    <!--启用resourcemanager ha-->
+    <property>
+        <name>yarn.resourcemanager.ha.enabled</name>
+        <value>true</value>
+    </property>
+
+    <!--声明两台resourcemanager的地址-->
+    <property>
+        <name>yarn.resourcemanager.cluster-id</name>
+        <value>cluster-yarn1</value>
+    </property>
+
+    <property>
+        <name>yarn.resourcemanager.ha.rm-ids</name>
+        <value>rm1,rm2</value>
+    </property>
+
+    <property>
+        <name>yarn.resourcemanager.hostname.rm1</name>
+        <value>hadoop101</value>
+    </property>
+
+    <property>
+        <name>yarn.resourcemanager.hostname.rm2</name>
+        <value>hadoop102</value>
+    </property>
+
+    <!--指定zookeeper集群的地址-->
+    <property>
+        <name>yarn.resourcemanager.zk-address</name>
+        <value>hadoop101:2181,hadoop102:2181,hadoop103:2181</value>
+    </property>
+
+    <!--启用自动恢复-->
+    <property>
+        <name>yarn.resourcemanager.recovery.enabled</name>
+        <value>true</value>
+    </property>
+
+    <!--指定resourcemanager的状态信息存储在zookeeper集群-->
+    <property>
+        <name>yarn.resourcemanager.store.class</name>
+		<value>org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore</value>
+    </property>
+    <!-- 后面hive的兼容性配置  -->
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>512</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>4096</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>4096</value>
+    </property>
+	
+	<!-- 开启日志聚集  -->
+<property>
+    <name>yarn.log-aggregation-enable</name>
+    <value>true</value>
+</property>
+<!-- 访问路径-->
+<property>  
+    <name>yarn.log.server.url</name>  
+    <value>http://hadoop102:19888/jobhistory/logs</value>
+</property>
+<!-- 保存的时间7天 -->
+<property>
+    <name>yarn.log-aggregation.retain-seconds</name>
+    <value>604800</value>
+</property>
+<!-- 解决Yarn在执行程序遇到超出虚拟内存限制，Container被kill  -->
+    <property>
+        <name>yarn.nodemanager.pmem-check-enabled</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>false</value>
+    </property>
+</configuration>
